@@ -3,12 +3,28 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+
 
 class UsersController extends Controller
 {
+    public function authenticate(Request $request)
+    {
+        $this->validate($request, [
+            'username' => 'required',
+            'password' => 'required',
+        ]);
+        $user = User::where('username', $request->input('username'))->first();
+        if (Hash::check($request->input('password'), $user->password)) {
+            
+            User::where('username', $request->input('username'))->select('nick');
+            return response()->json(User::where(['username' => $request->get('username')])->get('nick'), 201);
+        } else {
+            return response()->json(['status' => 'Usuário ou senha não encontrado.'], 401);
+        }
+    }
 
     public function showAllUsers()
     {
@@ -22,27 +38,35 @@ class UsersController extends Controller
 
     public function create(Request $request)
     {
-        $user = User::create($request->all());
+        $this->validate($request, [
+            'name' => 'required',
+            'username' => 'required',
+            'nick' => 'required',
+            'email' => 'required',
+            'number' => 'required',
+            'password' => 'required'
+        ]);
 
-        return response()->json($user, 201);
+        if ($user = User::create([
+            'name' => $request->get('name'),
+            'username' => $request->get('username'),
+            'nick' => $request->get('nick'),
+            'email' => $request->get('email'),
+            'number' => $request->get('number'),
+            'password' => Hash::make($request->get('password'))
+        ])
+        ) {
+            return response()->json($user, 201);
+        } else {
+            return response()->json(['status' => 'fail']);
+        }
+
     }
 
     public function update($id, Request $request)
     {
-        try {
-            $user = User::findOrFail($id);
-
-            if ($user->validate($request->all())) {
-                $user->fill($request->all());
-
-                // save
-                $user->save();
-            } else {
-                return response()->json($user->errors(), 422);
-            }
-        } catch (Exception $e) {
-            return response()->json($e, 422);
-        }
+        $user = User::findOrFail($id);
+        $user->update($request->all());
 
         return response()->json($user, 200);
     }

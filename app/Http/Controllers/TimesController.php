@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Time;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class TimesController extends Controller
 {
@@ -20,9 +21,22 @@ class TimesController extends Controller
 
     public function create(Request $request)
     {
-        $time = Time::create($request->all());
+        $this->validate($request, [
+            'name' => 'required',
+            'description' => 'required',
+            'password' => 'required'
+        ]);
 
-        return response()->json($time, 201);
+        if ($user = Time::create([
+            'name' => $request->get('name'),
+            'description' => $request->get('description'),
+            'password' => Hash::make($request->get('password'))
+        ])
+        ) {
+            return response()->json($user, 201);
+        } else {
+            return response()->json(['status' => 'fail']);
+        }
     }
 
     public function update($id, Request $request)

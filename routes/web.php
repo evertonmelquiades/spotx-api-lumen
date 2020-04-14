@@ -1,6 +1,7 @@
 <?php
 
 /** @var \Laravel\Lumen\Routing\Router $router */
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
   
     $router->put('users/{id}', ['uses' => 'UsersController@update']);
 
+    $router->get('login', ['uses' => 'UsersController@authenticate']);
+    
 //Times
     $router->get('times',  ['uses' => 'TimesController@showAllTimes']);
   

@@ -16,7 +16,7 @@ class Time extends Model implements
     
     protected $fillable = ['name', 'description', 'password'];
     
-    protected $hidden = [];
+    protected $hidden = ['password', 'updated_at', 'created_at'];
 }
 
 

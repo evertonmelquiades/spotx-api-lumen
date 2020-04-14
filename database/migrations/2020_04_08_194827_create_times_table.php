@@ -15,7 +15,7 @@ class CreateTimesTable extends Migration
     {
         Schema::create('times', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name', 50);
+            $table->string('name', 50)->unique();
             $table->string('description');
             $table->string('password');
             $table->timestamps();
