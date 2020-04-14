@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Time;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -30,7 +31,8 @@ class TimesController extends Controller
         if ($user = Time::create([
             'name' => $request->get('name'),
             'description' => $request->get('description'),
-            'password' => Hash::make($request->get('password'))
+            'password' => Hash::make($request->get('password')
+            )
         ])
         ) {
             return response()->json($user, 201);

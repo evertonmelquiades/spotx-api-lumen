@@ -20,7 +20,7 @@ class CreateTimesTable extends Migration
             $table->string('password');
             $table->timestamps();
 
-            $table->bigInteger('user_id')->unsigned()->nullable();
+            $table->unsignedBigInteger('user_id')->unsigned()->nullable();
             $table->foreign('user_id')
                   ->references('id')
                   ->on('users')

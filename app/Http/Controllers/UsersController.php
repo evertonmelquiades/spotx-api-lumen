@@ -20,7 +20,7 @@ class UsersController extends Controller
         if (Hash::check($request->input('password'), $user->password)) {
             
             User::where('username', $request->input('username'))->select('nick');
-            return response()->json(User::where(['username' => $request->get('username')])->get('nick'), 201);
+            return response()->json(['Você está logado com:'=> [User::where(['username' => $request->get('username')])->get('nick')]], 201);
         } else {
             return response()->json(['status' => 'Usuário ou senha não encontrado.'], 401);
         }
@@ -74,6 +74,6 @@ class UsersController extends Controller
     public function delete($id)
     {
         User::findOrFail($id)->delete();
-        return response('Deleted Successfully', 200);
+        return response('Usuário deletado com sucesso.', 200);
     }
 }
