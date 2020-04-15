@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Time;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class TimesController extends Controller
@@ -12,7 +13,7 @@ class TimesController extends Controller
 
     public function showAllTimes()
     {
-        return response()->json(Time::all());
+        return response()->json(Time::paginate(2));
     }
 
     public function showOneTimes($id)
