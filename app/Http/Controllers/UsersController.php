@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
+
 
 
 class UsersController extends Controller
@@ -28,7 +28,11 @@ class UsersController extends Controller
 
     public function showAllUsers()
     {
-        return response()->json(User::all());
+        $users = User::query()
+                    ->orderBy('id')
+                    ->get();
+
+        return view('users.index', compact('users'));
     }
 
     public function showOneUsers($id)
@@ -71,9 +75,10 @@ class UsersController extends Controller
         return response()->json($user, 200);
     }
 
-    public function delete($id)
+    public function destroy(Request $request)
     {
-        User::findOrFail($id)->delete();
-        return response('Usuário deletado com sucesso.', 200);
+        User::destroy($request->id);
+
+        return redirect()->route('listar_perfis');
     }
 }

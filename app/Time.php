@@ -18,9 +18,7 @@ class Time extends Model implements
     
     protected $hidden = ['password', 'updated_at', 'created_at'];
 
-    public function membros(){
-        return $this->hasMany(Membro::class);
-    }
+    
 }
 
 

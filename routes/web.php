@@ -18,15 +18,17 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+
+
 //Users
 $router->group(['prefix' => 'api'], function () use ($router) {
-    $router->get('users',  ['uses' => 'UsersController@showAllusers']);
+    $router->get('users',  ['as'=> 'listar_perfis','uses' => 'UsersController@showAllusers']);
   
     $router->get('users/{id}', ['uses' => 'UsersController@showOneUsers']);
   
-    $router->post('users', ['uses' => 'UsersController@create']);
+    $router->post('users', ['as' => 'criar_perfil', 'uses' => 'UsersController@create']);
   
-    $router->delete('users/{id}', ['uses' => 'UsersController@delete']);
+    $router->delete('users/{id}', ['uses' => 'UsersController@destroy']);
   
     $router->put('users/{id}', ['uses' => 'UsersController@update']);
 
