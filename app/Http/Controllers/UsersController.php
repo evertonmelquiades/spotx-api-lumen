@@ -18,7 +18,7 @@ class UsersController extends Controller
         ]);
         $user = User::where('username', $request->input('username'))->first();
         if (Hash::check($request->input('password'), $user->password)) {
-            
+
             User::where('username', $request->input('username'))->select('nick');
             return response()->json(['Você está logado com:'=> [User::where(['username' => $request->get('username')])->get('nick')]], 201);
         } else {
@@ -32,7 +32,7 @@ class UsersController extends Controller
                     ->orderBy('id')
                     ->get();
 
-        return view('users.index', compact('users'));
+        return response()->json($users);
     }
 
     public function showOneUsers($id)

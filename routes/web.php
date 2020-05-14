@@ -22,26 +22,26 @@ $router->get('/', function () use ($router) {
 
 //Users
 $router->group(['prefix' => 'api'], function () use ($router) {
-    $router->get('users',  ['as'=> 'listar_perfis','uses' => 'UsersController@showAllusers']);
-  
+    $router->get('users',  ['uses' => 'UsersController@showAllusers']);
+
     $router->get('users/{id}', ['uses' => 'UsersController@showOneUsers']);
-  
+
     $router->post('users', ['as' => 'criar_perfil', 'uses' => 'UsersController@create']);
-  
+
     $router->delete('users/{id}', ['uses' => 'UsersController@destroy']);
-  
+
     $router->put('users/{id}', ['uses' => 'UsersController@update']);
 
-    $router->get('login', ['uses' => 'UsersController@authenticate']);
-    
+    $router->post('login', ['uses' => 'UsersController@authenticate']);
+
 //Times
     $router->get('times',  ['uses' => 'TimesController@showAllTimes']);
-  
+
     $router->get('times/{id}', ['uses' => 'TimesController@showOneTimes']);
-  
+
     $router->post('times', ['uses' => 'TimesController@create']);
-  
+
     $router->delete('times/{id}', ['uses' => 'TimesController@delete']);
-  
+
     $router->put('times/{id}', ['uses' => 'TimesController@update']);
   });
