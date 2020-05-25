@@ -29,14 +29,14 @@ class TimesController extends Controller
             'password' => 'required'
         ]);
 
-        if ($user = Time::create([
+        if ($time = Time::create([
             'name' => $request->get('name'),
             'description' => $request->get('description'),
             'password' => Hash::make($request->get('password')
             )
         ])
         ) {
-            return response()->json($user, 201);
+            return response()->json($time, 201);
         } else {
             return response()->json(['status' => 'fail']);
         }
