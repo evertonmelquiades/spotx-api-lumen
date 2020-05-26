@@ -13,12 +13,12 @@ class Time extends Model implements
     AuthorizableContract
 {
     use Authenticatable, Authorizable;
-    
+
     protected $fillable = ['name', 'description', 'password'];
-    
+
     protected $hidden = ['password', 'updated_at', 'created_at'];
 
-    
+
 }
 
 
